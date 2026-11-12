@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Senvora_Import_Run_Key__c</fullName>
+    <description>Identifier stamped on each Opportunity by the external import.</description>
+    <label>SENVORA Import Run Key</label>
+    <length>80</length>
+    <type>Text</type>
+</CustomField>

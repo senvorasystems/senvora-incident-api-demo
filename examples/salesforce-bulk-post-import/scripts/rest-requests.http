@@ -1,0 +1,28 @@
+# VS Code extension: REST Client
+# Replace placeholders locally; never commit OAuth tokens.
+@instance = https://YOUR_DOMAIN.my.salesforce.com
+@token = REPLACE_WITH_OAUTH_ACCESS_TOKEN
+@runKey = SAP-2026-11-12-001
+
+### 1. Register one run BEFORE sending Opportunities
+POST {{instance}}/services/data/v67.0/sobjects/Senvora_Import_Run__c
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "Run_Key__c": "{{runKey}}",
+  "Status__c": "Ready"
+}
+
+### 2. After the integration has finished and verified results, signal completion
+POST {{instance}}/services/apexrest/senvora/v1/import-complete
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "runKey": "{{runKey}}"
+}
+
+### 3. Read the run status through SOQL REST query
+GET {{instance}}/services/data/v67.0/query?q=SELECT+Run_Key__c,Status__c,Batch_Job_Id__c,Updated_Accounts__c,Failed_Accounts__c+FROM+Senvora_Import_Run__c+WHERE+Run_Key__c='{{runKey}}'
+Authorization: Bearer {{token}}
